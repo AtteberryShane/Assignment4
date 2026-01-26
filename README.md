@@ -58,6 +58,8 @@ Part 1 will show you how to run YOLO, a popular object detection and localizatio
 
 To quote Nvidia, Jetson Xavier NX delivers up to 21 TOPS, making it ideal for high-performance compute and AI in embedded and edge systems. You get the performance of 384 NVIDIA CUDA® Cores, 48 Tensor Cores, 6 Carmel ARM CPUs, and two NVIDIA Deep Learning Accelerators (NVDLA) engines. Combined with over 59.7GB/s of memory bandwidth, video encode, and decode, these features make Jetson Xavier NX the platform of choice to run multiple modern neural networks in parallel and process high-resolution data from multiple sensors simultaneously.
 
+This assumes that you have a working setup from Milestone Assignment 1 Part 1. Please execute all instructions with **[Remote PC]** on Docker shell. Note that you have to enable GUI and start the Docker container by following instruction from Milestone Assignment 1. Please execute all instructions with **[Turtlebot Nvidia Jetson]** on Turtlebot Jetson's native bash shell without Docker.
+
 The following instructions are from our own and not from online sources. Please follow carefully and ask the IA for assistance should you face any problems.
 
 1. **[Turtlebot Nvidia Jeston]** On Jetson, you can look at CPU and GPU usage in real-time by using the following command on a separate terminal window. CPU will show real-time CPU load, and GR3D_FREQ will give you an idea for real-time GPU load. You can run this on another terminal window.
@@ -157,6 +159,8 @@ To quote the manufacturer, the Hailo-8 edge AI processor, featuring up to 26 ter
 
 The following instruction was adopted from Hailo 8 examples git repository. The provided code is modified code from the following git that takes in Pi v2 camera feed.
 [https://github.com/hailo-ai/Hailo-Application-Code-Examples/tree/main/runtime/hailo-8/python/object_detection](https://github.com/hailo-ai/Hailo-Application-Code-Examples/tree/main/runtime/hailo-8/python/object_detection)
+
+This assumes that you have a working setup from Milestone Assignment 1 Part 1. Please execute all instructions with **[Remote PC]** on Docker shell. Note that you have to enable GUI and start the Docker container by following instruction from Milestone Assignment 1. Please execute all instructions with **[Turtlebot Nvidia Jetson]** on Turtlebot Jetson's native bash shell without Docker.
 
 1. **[Turtlebot Nvidia Jeston]** Whenever you are running an application using the Hailo accelerator, you can check the status of the Hailo accelerator using this command on another terminal window.
 ```bash
