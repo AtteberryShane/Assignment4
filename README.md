@@ -31,11 +31,11 @@ Please head here for an introduction to the YOLO Computer Vision Object Detectio
 
 ### Assignment requirement
 
-Assignment 4 requires a physical demonstration in front of Professor Tsz-Chiu Au. Please arrange a time with him for a physical demonstration. You need to demonstrate that you can integrate what you have learned about ROS2 and turtlebot, YOLO, Whisper, and LLM for missions outlined in milestone 6. The grading for this assignment will be divided into four parts. Please submit the source code of your program after the demo.
+Assignment 4 requires a physical demonstration in front of Professor Tsz-Chiu Au. Please arrange a time with him for a physical demonstration. You need to demonstrate that you can integrate what you have learned about ROS2 and turtlebot, YOLO, Whisper, and LLM for missions outlined in milestone 6. The grading for this assignment will be divided into three parts. Please submit the source code of your program after the demo.
 
 You need to demonstrate that you can utilize YOLO for your needs based on the requirements. 
 
-Refer to the demo requirement section at the end of the milestone assignment on what to include in the video. Rules for robot usage will apply for working with the physical Turtlebot3. Please refer to the inventory list given to you separately.
+Refer to the demo requirement section at the end of the milestone assignment on what to include in the demo. Rules for robot usage will apply for working with the physical Turtlebot3. Please refer to the inventory list given to you separately.
 
 > **Major Changes**
 > * v 1.0  Initial public release
@@ -240,11 +240,10 @@ Again, make sure both machines have synced time and are on the same local networ
 
 ---
 
-### Video Demo Requirements (3-4 Minute Demonstration)
+### Demo Requirements (10-15 Minute Demonstration)
 
-Your group will submit a single, continuous video (e.g., MP4 format) that is approximately three to four minutes long. The video must be narrated by a group member, explaining each step. Please state the names of all group members at the beginning.
-For this demo, you will need to show the live video output from the Jetson. Please connect an HDMI monitor directly to the Jetson for Parts A and B. For Part C, your recording must show the Jetson's screen and the Remote PC's screen simultaneously.
-Your submission must include two items: the video file and a single .zip file containing your ROS2 publisher and subscriber source codes.
+We will allow you to have multiple attempts for each demo. For additional accommodations necessary, please contact IA or the professor.
+Your submission must include a single .zip file containing all of your source code.
 
 **Part A: YOLOv11 Demonstration on Jetson GPU**
 This part demonstrates your ability to run various YOLOv11 models on the Jetson's GPU using a live camera feed.
