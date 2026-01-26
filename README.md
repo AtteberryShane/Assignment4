@@ -67,20 +67,18 @@ tegrastats
 ```
 
 
-2. **[Turtlebot Nvidia Jeston]** While connected to the internet, install gdown and download the demo files and unzip them in the home directory. Alternatively, download it using the web browser.
+2. **[Turtlebot Nvidia Jeston]** While connected to the internet, git clone and download the demo in Turtlebot's Nvidia Jetson. 
+
 ```bash
 cd ~/
-pip install gdown
-gdown 'https://drive.google.com/file/d/1poE5Onnib9HCt7UPihIb1vQKV8YDNwfk/view?usp=sharing'
-unzip CS7389K_Robotics_Demo.zip
+git clone https://github.com/dmz44/Robotics_Assignment_4.git
 
 ```
 
 
 3. **[Turtlebot Nvidia Jeston]** Go to the folder in a new terminal window
 ```bash
-cd ~/CS7389K_Robotics_Demo/assignment4/CUDA_Demo
-
+cd ~/Robotics_Assignment_4/Assignment_4_demo/CUDA_Demo
 ```
 
 
@@ -169,7 +167,7 @@ hailortcli monitor
 
 2. **[Turtlebot Nvidia Jeston]** Assuming you have downloaded the files, go to the hailo_demo folder in a new terminal window.
 ```bash
-cd ~/CS7389K_Robotics_Demo/assignment4/Hailo-Application-Code-Examples/runtime/hailo-8/python/object_detection
+cd ~/Robotics_Assignment_4/Assignment_4_demo/Hailo-Application-Code-Examples/runtime/hailo-8/python/object_detection
 
 ```
 
