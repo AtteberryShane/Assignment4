@@ -1,0 +1,6 @@
+bytetracker
+supervision==0.25.1
+loguru
+tqdm
+requests
+opencv-python
