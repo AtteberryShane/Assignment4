@@ -239,7 +239,7 @@ python3 object_detection.py -n yolov11x.hef -i camera
 
 In order to complete part 3, you need to learn how to use ROS 2 to command the turtlebot using your own program. Refer to the Assignment 3 Appendix for help regarding this process. Take a look at the provided publisher and subscriber script for YOLO in the git repository.
 
-Again, make sure both machines have synced time and are on the same local network.
+We are giving you sample codes, one for the subscriber and one for the publisher, to get you started.
 
 ---
 
@@ -265,9 +265,9 @@ This section proves you can offload inference to the Hailo-8 NPU for acceleratio
 
 **Part C: ROS2 Publisher & Subscriber Demonstration -  -70 points**
 
-This part showcases your ability to integratethe  given ROS2 code for a robotic task.
+This part showcases your ability to integrate the given ROS2 code for a robotic task.
 
-For slides detailing the arena and detailed rules will be released soon.
+Slides detailing the arena and detailed rules will be released separately.
 
 * a): Demonstrating Visual Servoing to a Bottle (Task 1) -10 points
 
@@ -299,7 +299,7 @@ To complete this requirement, you would need to adapt milestone 3’s teleoperat
 
 ### Appendix
 
-#### [Guide] Running YOLO v11 on Your Desktop Machine
+#### [Optional] Running YOLO v11 on Your Desktop Machine
 
 You can run YOLO v11 with either CPU only or CUDA on your own desktop machine with any architecture, with the following setup and modifications. This capability might help you with offloading some of the development for this assignment to your own machine. However, while this instruction was tested on our machines, we would not offer official support for you running YOLO on your own machine. We would also not provide ways to hook up camera feed from Gazebo’s simulated turtlebot onto YOLO v11.
 
