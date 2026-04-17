@@ -51,6 +51,7 @@ class BottleAutonomyController(Node):
         self.return_end_time = 0.0
         self.base_step = ""
         self.base_step_end_time = 0.0
+        self.align_settle_until = 0.0
 
         # Action Clients
         self.arm_action_client = ActionClient(self, FollowJointTrajectory, '/arm_controller/follow_joint_trajectory')
@@ -124,6 +125,8 @@ class BottleAutonomyController(Node):
             self.run_align()
         elif self.state == "APPROACH":
             self.run_approach()
+        elif self.state == "ALIGN_SETTLE":
+            self.run_align_settle()
         elif self.state == "PICKUP":
             self.run_sequence()
         elif self.state == "RETURN":
@@ -151,12 +154,25 @@ class BottleAutonomyController(Node):
         error_x = bbox["cx"] - CENTER_X
         if abs(error_x) <= CENTER_TOLERANCE_PX:
             self.stop_base()
-            self.state = "APPROACH"
-            self.get_logger().info("Bottle centered, switching to APPROACH")
+            self.align_settle_until = time.monotonic() + 0.5
+            self.state = "ALIGN_SETTLE"
+            self.get_logger().info("Bottle centered, settling before APPROACH")
             return
         
         angular_cmd = max(-MAX_ALIGN_SPEED, min(MAX_ALIGN_SPEED, -ALIGN_GAIN * error_x))
         self.publish_base_cmd(0.0, angular_cmd)
+
+    def run_align_settle(self):
+        self.stop_base()
+
+        if not self.bottle_is_fresh():
+            self.state = "SEARCH"
+            self.get_logger().info("Bottle lost during settle, switching to SEARCH")
+            return
+
+        if time.monotonic() >= self.align_settle_until:
+            self.state = "APPROACH"
+            self.get_logger().info("Settle complete, switching to APPROACH")
 
     def run_approach(self):
         if not self.bottle_is_fresh():
