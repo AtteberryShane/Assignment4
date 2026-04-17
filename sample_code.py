@@ -96,7 +96,6 @@ class BottleAutonomyController(Node):
         detections = data.get("detection", data.get("detections", []))
         bottle = self.find_best_bottle(detections)
         if bottle is None:
-            self.latest_bottle = None
             return
         
         self.latest_bottle = bottle
