@@ -11,11 +11,12 @@ from builtin_interfaces.msg import Duration
 from sensor_msgs.msg import JointState
 from std_msgs.msg import String
 
-SEARCH_TURN_SPEED = 0.25
-ALIGN_GAIN = 0.0025
-MAX_ALIGN_SPEED = 0.5
+SEARCH_TURN_SPEED = 0.15
+ALIGN_GAIN = 0.0015
+MAX_ALIGN_SPEED = 0.2
 CENTER_X = 640.0
 CENTER_TOLERANCE_PX = 60.0
+APPROACH_REALIGN_PX = 120.0
 APPROACH_LINEAR_SPEED = 0.05
 TARGET_BBOX_WIDTH = 180.0
 DETECTION_TIMEOUT_SEC = 0.75
@@ -161,13 +162,17 @@ class BottleAutonomyController(Node):
         error_x = bbox["cx"] - CENTER_X
         if abs(error_x) <= CENTER_TOLERANCE_PX:
             self.stop_base()
-            self.align_settle_until = time.monotonic() + 0.5
+            self.align_settle_until = time.monotonic() + 0.2
             self.settle_loss_deadline = self.align_settle_until + DETECTION_TIMEOUT_SEC
             self.state = "ALIGN_SETTLE"
             self.get_logger().info("Bottle centered, settling before APPROACH")
             return
         
-        angular_cmd = max(-MAX_ALIGN_SPEED, min(MAX_ALIGN_SPEED, -ALIGN_GAIN * error_x))
+        angular_cmd = -ALIGN_GAIN * error_x
+        if abs(error_x) < 160.0:
+            angular_cmd *= 0.6
+
+        angular_cmd = max(-MAX_ALIGN_SPEED, min(MAX_ALIGN_SPEED, angular_cmd))
         self.publish_base_cmd(0.0, angular_cmd)
 
     def run_align_settle(self):
@@ -194,7 +199,7 @@ class BottleAutonomyController(Node):
         bbox = self.latest_bottle["bbox"]
         error_x = bbox["cx"] - CENTER_X
     
-        if abs(error_x) > CENTER_TOLERANCE_PX:
+        if abs(error_x) > APPROACH_REALIGN_PX:
             self.state = "ALIGN"
             return
         
@@ -203,7 +208,8 @@ class BottleAutonomyController(Node):
             self.start_pickup_sequence()
             return
         
-        self.publish_base_cmd(APPROACH_LINEAR_SPEED, 0.0)
+        approach_angular = max(-0.1, min(0.1, -0.001 * error_x))
+        self.publish_base_cmd(APPROACH_LINEAR_SPEED, approach_angular)
 
     def start_pickup_sequence(self):
         self.sequence = [
