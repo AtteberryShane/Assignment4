@@ -26,8 +26,8 @@ GRIPPER_CLOSE = -0.01
 
 
 HOME_POSE = [0.0, 0.0, 0.0, 0.0]
-EXTEND_POSE = [0.0, -0.9, 0.6, 0.3]
-PLACE_POSE = [0.0, -0.6, 0.45, 0.15]
+EXTEND_POSE = [0.0, 0.4, -0.6, 0.4]
+PLACE_POSE = [0.0, 0.4, -0.6, 0.4]
 
 
 class BottleAutonomyController(Node):
