@@ -45,6 +45,7 @@ class BottleAutonomyController(Node):
 
         self.latest_bottle = None
         self.last_detection_time = 0.0
+        self.last_bottle_error_x = 0.0
         self.state= "SEARCH"
         self.sequence = []
         self.sequence_deadline = 0.0
@@ -52,6 +53,7 @@ class BottleAutonomyController(Node):
         self.base_step = ""
         self.base_step_end_time = 0.0
         self.align_settle_until = 0.0
+        self.settle_loss_deadline = 0.0
 
         # Action Clients
         self.arm_action_client = ActionClient(self, FollowJointTrajectory, '/arm_controller/follow_joint_trajectory')
@@ -98,6 +100,7 @@ class BottleAutonomyController(Node):
             return
         
         self.latest_bottle = bottle
+        self.last_bottle_error_x = bottle["bbox"]["cx"] - CENTER_X
         self.last_detection_time = time.monotonic()
 
     def find_best_bottle(self, detections):
@@ -141,8 +144,13 @@ class BottleAutonomyController(Node):
             self.state = "ALIGN"
             self.get_logger().info("Bottle detected, switching to ALIGN")
             return
-        
-        self.stop_base()
+
+        if self.last_bottle_error_x > 0.0:
+            search_angular = -SEARCH_TURN_SPEED
+        else:
+            search_angular = SEARCH_TURN_SPEED
+
+        self.publish_base_cmd(0.0, search_angular)
     
     def run_align(self):
         if not self.bottle_is_fresh():
@@ -155,6 +163,7 @@ class BottleAutonomyController(Node):
         if abs(error_x) <= CENTER_TOLERANCE_PX:
             self.stop_base()
             self.align_settle_until = time.monotonic() + 0.5
+            self.settle_loss_deadline = self.align_settle_until + DETECTION_TIMEOUT_SEC
             self.state = "ALIGN_SETTLE"
             self.get_logger().info("Bottle centered, settling before APPROACH")
             return
@@ -166,8 +175,11 @@ class BottleAutonomyController(Node):
         self.stop_base()
 
         if not self.bottle_is_fresh():
+            if time.monotonic() < self.settle_loss_deadline:
+                return
+
             self.state = "SEARCH"
-            self.get_logger().info("Bottle lost during settle, switching to SEARCH")
+            self.get_logger().info("Bottle lost after settle grace period, switching to SEARCH")
             return
 
         if time.monotonic() >= self.align_settle_until:
